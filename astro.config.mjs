@@ -28,7 +28,7 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-    site: "https://blog.isyyo.com/",
+    site: "https://curilenses.github.io/",
     base: "/",
     trailingSlash: "always",
 
