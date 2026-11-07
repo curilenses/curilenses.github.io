@@ -2,6 +2,7 @@
 import { profileConfig, siteConfig } from "../config";
 import { url } from "../utils/url-utils";
 
+const startDate = new Date("2026-10-24"); // temporary magic number
 const currentYear = new Date().getFullYear();
 ---
 
@@ -13,7 +14,7 @@ const currentYear = new Date().getFullYear();
     <!-- <br> -->
     <div class="transition text-50 text-sm text-center">
         <!-- &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved. / -->
-        Copyright &copy; 2019 - <span id="copyright-year">{currentYear}</span> <a class="transition link text-[var(--primary)] font-medium" href={Astro.site}>{siteConfig.title}</a> /
+        Copyright &copy; <span id="start-year" data-date={startDate.toDateString()}>{startDate.getFullYear()}</span> {currentYear !== startDate.getFullYear() ? <span> - </span><span id="copyright-year">{currentYear}</span> : ""} <span>&nbsp;</span><a class="transition link text-[var(--primary)] font-medium" href={Astro.site}>{siteConfig.title}</a> /
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')}>RSS</a> /
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('sitemap-index.xml')}>Sitemap</a><br>
         Powered by
@@ -29,7 +30,8 @@ const currentYear = new Date().getFullYear();
 </div>
 
 <script>
-    const startDate = new Date('2019-07-01');
+    const startEl = document.getElementById("start-year");
+    const startDate = startEl?.dataset.date ? new Date(startEl.dataset.date) : new Date();
 
     function updateUptime() {
         const now = new Date();
