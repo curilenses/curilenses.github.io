@@ -69,5 +69,6 @@
 				}
 			]
 		}
-	]
+	],
+	"frontMatter.framework.startCommand": "pnpm dev"
 }
