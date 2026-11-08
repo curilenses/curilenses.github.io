@@ -1,4 +1,5 @@
 ---
+import { formatDateToYYYYMMDD } from "@utils/date-utils";
 import { profileConfig, siteConfig } from "../config";
 import { url } from "../utils/url-utils";
 
@@ -14,12 +15,14 @@ const currentYear = new Date().getFullYear();
     <!-- <br> -->
     <div class="transition text-50 text-sm text-center">
         <!-- &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved. / -->
-        Copyright &copy; <span id="start-year" data-date={startDate.toDateString()}>{startDate.getFullYear()}</span> {currentYear !== startDate.getFullYear() ? <span> - </span><span id="copyright-year">{currentYear}</span> : ""} <span>&nbsp;</span><a class="transition link text-[var(--primary)] font-medium" href={Astro.site}>{siteConfig.title}</a> /
+        Copyright &copy; <span id="start-year" data-date={formatDateToYYYYMMDD(startDate)}>{startDate.getFullYear()}</span>{currentYear !== startDate.getFullYear() ? <span> - </span><span id="copyright-year">{currentYear}</span> : ""} {profileConfig.name}<br/>
+        <a class="transition link text-[var(--primary)] font-medium" href={Astro.site}>{siteConfig.title}</a> /
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')}>RSS</a> /
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('sitemap-index.xml')}>Sitemap</a><br>
+        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('sitemap-index.xml')}>Sitemap</a><br/>
         Powered by
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a> &
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/yyhhkya/fuwari">Fuwari 二开版</a><br>
+        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/yyhhkya/fuwari">Fuwari 二开版</a> &
+        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://docs.github.com/zh/pages">Github Pages</a><br/>
         <!--<a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://beian.miit.gov.cn/">粤ICP备2025491914号</a> | 
         <a class="transition link text-[var(--primary)] font-medium" href="https://beian.mps.gov.cn/#/query/webSearch?code=44195502000155" rel="noreferrer" target="_blank">粤公网安备44195502000155号</a><br>
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://icp.gov.moe/?keyword=20251971">萌ICP备20251971号</a> | 
@@ -30,8 +33,8 @@ const currentYear = new Date().getFullYear();
 </div>
 
 <script>
-    const startEl = document.getElementById("start-year");
-    const startDate = startEl?.dataset.date ? new Date(startEl.dataset.date) : new Date();
+    const startDateRaw = document.getElementById("start-year")?.dataset.date;
+    const startDate = startDateRaw ? new Date(startDateRaw) : new Date();
 
     function updateUptime() {
         const now = new Date();
